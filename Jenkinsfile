@@ -19,9 +19,9 @@ pipeline {
 		stage('Configure Git') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: '94b1d549-e867-4f68-a96d-5c5b7b1a01b6', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        sh "git config --global user.name '${env.GIT_USERNAME}'"
-                        sh "git config --global user.email '${env.GIT_USERNAME}@hotmail.com'" // Replace with actual email
+                    withCredentials([usernamePassword(credentialsId: 'git-credentials', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        bat "git config --global user.name '${env.GIT_USERNAME}'"
+                        bat "git config --global user.email '${env.GIT_USERNAME}@hotmail.com'"
                     }
                 }
             }
