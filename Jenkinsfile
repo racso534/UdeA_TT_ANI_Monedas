@@ -25,12 +25,7 @@ pipeline {
             steps { 
 				script {               
             		catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {					
-                        bat """
-                        	docker container inspect ${CONTAINER_NAME} > nul 2 > &1 && (
-                            	docker container stop ${CONTAINER_NAME}
-                            	docker container rm ${CONTAINER_NAME}
-                        	) || echo "No existe el contenedor '${CONTAINER_NAME}'."
-                        """
+                        bat "docker container rm -f ${CONTAINER_NAME}"
                     }
                 }
             }
