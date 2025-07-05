@@ -10,12 +10,22 @@ pipeline {
 		CONTAINER_PORT = '8080'
 	}
 	
-	stages{
+	stages{		
 		/*stage('Compilacion Maven'){
 			steps{				
 				bat 'mvn clean package -DskipTests'
 			}
 		}*/
+		stage('Configure Git') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: '94b1d549-e867-4f68-a96d-5c5b7b1a01b6', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh "git config --global user.name '${env.GIT_USERNAME}'"
+                        sh "git config --global user.email '${env.GIT_USERNAME}@hotmail.com'" // Replace with actual email
+                    }
+                }
+            }
+        }
 		stage('Construir Imagen'){
 			steps{				
 				bat "docker build . -t ${DOCKER_IMAGE}"					
