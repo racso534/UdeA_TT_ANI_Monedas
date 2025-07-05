@@ -15,11 +15,16 @@ pipeline {
 			steps{				
 				bat 'mvn clean package -DskipTests'
 			}
-		}*/	
-		/*stage('Limpiar contenedor existente') {
-            steps {                
-            	catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-					script {
+		}*/
+		stage('Construir Imagen'){
+			steps{				
+				bat "docker build . -t ${DOCKER_IMAGE}"					
+			}
+		}	
+		stage('Limpiar contenedor existente') {
+            steps { 
+				script {               
+            		catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {					
                         bat """
                         	docker container inspect ${CONTAINER_NAME} > nul 2 > &1 && (
                             	docker container stop ${CONTAINER_NAME}
@@ -29,14 +34,7 @@ pipeline {
                     }
                 }
             }
-        }*/
-		stage('Construir Imagen'){
-			steps{
-				//dir("${DOCKER_BUILD_DIR}"){
-					bat "docker build . -t ${DOCKER_IMAGE}"	
-				//}
-			}
-		}				
+        }						
 		stage('Desplegar Contenedor'){
 			steps{				
 				bat "docker run --network ${DOCKER_NETWORK} --name ${CONTAINER_NAME} -p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE}"				
