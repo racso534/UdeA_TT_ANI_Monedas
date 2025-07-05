@@ -17,9 +17,9 @@ pipeline {
 			}
 		}*/	
 		stage('Limpiar contenedor existente') {
-            steps {
-                script {
-                    catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+            steps {                
+            	catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
+					script {
                         bat """
                         docker container inspect ${CONTAINER_NAME} >nul 2>&1 && (
                             docker container stop ${CONTAINER_NAME}
