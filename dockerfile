@@ -4,7 +4,7 @@ COPY . .
 RUN mvn clean install -DskipTests
 
 FROM openjdk:17-jdk-alpine
-#WORKDIR /app
+WORKDIR /app
 COPY app/presentacion/target/presentacion-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
