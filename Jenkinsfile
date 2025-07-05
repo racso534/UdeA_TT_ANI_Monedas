@@ -16,7 +16,7 @@ pipeline {
 				bat 'mvn clean package -DskipTests'
 			}
 		}*/
-		stage('Limpiar contenedor existente'){
+		stage('Limpiar contenedor existente---'){
 			steps {
 				script {
 					catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
